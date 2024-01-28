@@ -3,9 +3,8 @@
 namespace App\Service;
 
 use App\Entity\User;
-use App\Model\RegisterRequest;
+use App\Model\RegisterRequestDTO;
 use App\Repository\UserRepository;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler;
@@ -35,7 +34,7 @@ class AuthService
         $this->successHandler = $authenticationSuccessHandler;
     }
 
-    public function register(RegisterRequest $registerRequest): string
+    public function register(RegisterRequestDTO $registerRequest): string
     {
         if ($this->userRepository->getByEmail($registerRequest->getEmail())) {
             throw new BadRequestHttpException('User already exists');

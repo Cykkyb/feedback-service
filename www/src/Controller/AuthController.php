@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use App\Model\RegisterRequest;
+use App\Model\RegisterRequestDTO;
 use App\Service\AuthService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,13 +30,13 @@ class AuthController extends AbstractController
     #[Route('/api/v1/auth/register', name: 'register', methods: ['POST'])]
     public function register(Request $request): Response
     {
-        $registerRequest = $this->serializer->deserialize($request->getContent(), RegisterRequest::class, 'json');
+        $registerRequest = $this->serializer->deserialize($request->getContent(), RegisterRequestDTO::class, 'json');
 
         $errors = $this->validator->validate($registerRequest);
         if (count($errors) > 0) {
             $errorMessages = [];
+
             foreach ($errors as $error) {
-                $this->addFlash('error', $error->getMessage());
                 $errorMessages[] = $error->getMessage();
             }
 
