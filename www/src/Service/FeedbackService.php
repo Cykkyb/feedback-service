@@ -87,7 +87,7 @@ class FeedbackService
 
    public function update(FeedbackRequest $feedbackRequest): void
    {
-       $this->feedbackRepository->update($feedbackRequest);
+       $this->feedbackRepository->update();
    }
 
 }
